@@ -4,7 +4,7 @@ Plugin Name: WP deferred javaScript
 Plugin URI: http://www.wabeo.fr
 Description: This plugin defer the loading of all javascripts added by the way of wp_enqueue_scripts, using LABJS.
 Version:1.0
-Author: Willy Bahuaud, Daniel Roch
+Author: Willy Bahuaud, confridin
 Author URI: http://wabeo.fr
 */
 /**
