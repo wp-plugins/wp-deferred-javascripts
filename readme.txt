@@ -1,5 +1,5 @@
 === WP Deferred Javascripts ===
-Contributors: willybahuaud, Daniel Roch
+Contributors: willybahuaud, Confridin
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
 Tested up to: 3.5.1
