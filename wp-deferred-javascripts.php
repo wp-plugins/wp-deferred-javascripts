@@ -99,7 +99,8 @@ function render_our_scripts_now( $all_our_ordered_scripts ) {
 		$output  = '<script src="'.plugin_dir_url( __FILE__ ).'j/lab.min.js"></script>'."\n";
 		$output .= '<script>';
 		foreach($all_our_ordered_scripts as $s) {
-			$datas = ( isset( $s['extra']['data'] ) ) ? $s['extra']['data'] : '';
+			$datas  = ( isset( $s['extra']['data'] ) ) ? $s['extra']['data'] : '';
+			$src	= ( preg_match( '/^\/[^\/]/', $s['src'] ) ) ? get_bloginfo( 'wpurl' ).$s['src'] : $s['src'] ;
 			$output .= $datas.'$LAB.script("'.$s['src'].'");'."\n";
 		}
 		$output .= '</script>';
