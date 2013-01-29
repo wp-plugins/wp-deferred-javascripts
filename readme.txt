@@ -24,9 +24,12 @@ If a plugin or a theme is not poperly enqueuing scripts, your site may not work.
 
 == Changelog ==
 
+= 1.2 =
+* Data called after wp_head, but linked to a script queued into header are now considered by the plugin
+
 = 1.1 =
 * Correction of some minor bugs
 * Improve code readability
 
 = 1.0 =
-* Initial version
+* Initial release
