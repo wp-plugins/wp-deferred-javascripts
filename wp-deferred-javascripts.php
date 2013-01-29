@@ -101,7 +101,7 @@ function render_our_scripts_now( $all_our_ordered_scripts ) {
 		foreach($all_our_ordered_scripts as $s) {
 			$datas  = ( isset( $s['extra']['data'] ) ) ? $s['extra']['data'] : '';
 			$src	= ( preg_match( '/^\/[^\/]/', $s['src'] ) ) ? get_bloginfo( 'wpurl' ).$s['src'] : $s['src'] ;
-			$output .= $datas.'$LAB.script("'.$s['src'].'");'."\n";
+			$output .= $datas.'$LAB.script("'.$src.'");'."\n";
 		}
 		$output .= '</script>';
 		echo $output;
