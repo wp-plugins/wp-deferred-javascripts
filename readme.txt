@@ -14,7 +14,9 @@ This plugin defer the loading of all javascripts added by the way of wp_enqueue_
 
 It is compatible with all WordPress javascript functions (localize_script, js in header, in footer ...) and works with all well coded plugins.
 
-If a plugin or a theme is not poperly enqueuing scripts, your site may not work. Check this page : http://codex.wordpress.org/Function_Reference/wp_enqueue_script
+If a plugin or a theme is not poperly enqueuing scripts, your site may not work. Check this page : [Function Reference/wp_enqueue_script on WordPress Codex](http://codex.wordpress.org/Function_Reference/wp_enqueue_script)
+
+LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project supported by [Getify Solutions](http://getify.com/).
 
 == Installation ==
 
