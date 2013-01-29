@@ -24,5 +24,9 @@ If a plugin or a theme is not poperly enqueuing scripts, your site may not work.
 
 == Changelog ==
 
+= 1.1 =
+* Correction of some minor bugs
+* Improve code readability
+
 = 1.0 =
-* First version, with some hooks and functions
+* Initial version
