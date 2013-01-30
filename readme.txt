@@ -26,6 +26,9 @@ LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project 
 
 == Changelog ==
 
+= 1.3 =
+* Fixed a major bug : files with dependencies are now waiting the loading of parent files before loading themselves
+
 = 1.2 =
 * Data called after wp_head, but linked to a script queued into header are now considered by the plugin
 
