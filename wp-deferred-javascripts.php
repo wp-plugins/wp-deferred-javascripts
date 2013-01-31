@@ -83,9 +83,10 @@ function cross_the_steams() {
 				}
 				if( $alldepscounter == count( $s['deps'] ) ) { //YEAH, all conditions are satisfied now !!
 					// I have to wait ?
-					if( $waited_scripts == array_intersect( $waited_scripts, $s['deps'] ) ) {
+					$diff = array_diff(  $s['deps'], $waited_scripts );
+					if(  ! empty ( $diff ) ) {
 						$s['wait'] = true;
-						array_merge( $waited_scripts, $s['deps'] );
+						$waited_scripts =  array_merge( (array) $waited_scripts,  (array) $s['deps'] );
 					}
 					$s['extra'] = $wp_scripts->registered[ $k ]->extra; //joining datas
 					$all_our_ordered_scripts[ $k ] = $s;
@@ -95,7 +96,6 @@ function cross_the_steams() {
 			}
 		}
 	}
-	// var_dump($all_our_ordered_scripts);
 	render_our_scripts_now( $all_our_ordered_scripts ); //print scripts
 }
 add_action( 'wp_footer', 'cross_the_steams', 99 );
