@@ -24,6 +24,17 @@ LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project 
 
 2. Enjoy ^^
 
+== Screenshots ==
+
+We performed a range of tests to determine the potential benefit of loading time. On [wabeo](http://wabeo.fr) we executed [webwait](http://webwait.com/) (150 calls by test) :
+
+1. Average load time of **1.91** seconds **without WP Deferred Javascripts activated** and scripts loaded in the header
+2. Average load time of **1.99** seconds **without WP Deferred Javascripts activated** and scripts queued in the footer
+3. Average load time of **1.56** seconds **with WP Deferred Javascripts activated** and scripts queued in the header
+4. Average load time of **1.54** seconds **with WP Deferred Javascripts activated** and scripts queued in the footer
+
+Result is this plugin could **improve your loading time by 25%** !!
+
 == Changelog ==
 
 = 1.3 =
