@@ -18,6 +18,7 @@ function initialize_script_global() {
 add_action( 'init', 'initialize_script_global' );
 /**
 PUSH SCRIPTS INTO OUR GLOBAL & EMPTYING $WP_SCRIPTS
+* @since 1.4 {filter scripts are now hooked on wp_print_scripts}
 * @since 1.2 {datas are queued into cross_the_steams()}
 * @uses FILTER all_our_scripts_datas
 */
@@ -32,8 +33,7 @@ function you_shall_not_pass() {
 	}
 	$wp_scripts->queue = array();
 }
-add_action( 'wp_head', 'you_shall_not_pass', 1 );
-add_action( 'wp_footer', 'you_shall_not_pass', 1 );
+add_action( 'wp_print_scripts', 'you_shall_not_pass', 9 );
 
 /**
 FINAL REPORT OF SCRIPTS

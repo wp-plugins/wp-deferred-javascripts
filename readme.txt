@@ -18,6 +18,11 @@ If a plugin or a theme is not poperly enqueuing scripts, your site may not work.
 
 LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project supported by [Getify Solutions](http://getify.com/).
 
+We performed a range of tests to determine the potential benefit of loading time. On [wabeo](http://wabeo.fr) we executed [webwait](http://webwait.com/) (150 calls by test). Result is this plugin could **improve your loading time by 25%** !! 
+More information in the [Screenshots section](http://wordpress.org/extend/plugins/wp-deferred-javascripts/screenshots/).
+
+You can find [more information about WP defered Javascripts](http://www.seomix.fr/wp-deferred-javascript/) and [technical information about asynchronous scripts](http://wabeo.fr/blog/wordpress-javascripts-asynchrones/) on authors blogs.
+
 == Installation ==
 
 1. Upload the WP Deferred Javascripts plugin to your blog and Activate it.
@@ -26,16 +31,15 @@ LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project 
 
 == Screenshots ==
 
-We performed a range of tests to determine the potential benefit of loading time. On [wabeo](http://wabeo.fr) we executed [webwait](http://webwait.com/) (150 calls by test) :
-
 1. Average load time of **1.91** seconds **without WP Deferred Javascripts activated** and scripts loaded in the header
 2. Average load time of **1.99** seconds **without WP Deferred Javascripts activated** and scripts queued in the footer
 3. Average load time of **1.56** seconds **with WP Deferred Javascripts activated** and scripts queued in the header
 4. Average load time of **1.54** seconds **with WP Deferred Javascripts activated** and scripts queued in the footer
 
-Result is this plugin could **improve your loading time by 25%** !!
-
 == Changelog ==
+
+= 1.4 =
+* Fixed a minor bug : some javascripts enqueued with very high priority were ignored - filter scripts are now hooked on wp_print_scripts
 
 = 1.3 =
 * Fixed a major bug : files with dependencies are now waiting the loading of parent files before loading themselves
