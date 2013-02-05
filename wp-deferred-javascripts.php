@@ -32,8 +32,8 @@ function you_shall_not_pass() {
 	}
 	$wp_scripts->queue = array();
 }
-add_action( 'wp_head', 'you_shall_not_pass', 9 );
-add_action( 'wp_footer', 'you_shall_not_pass', 9 );
+add_action( 'wp_head', 'you_shall_not_pass', 1 );
+add_action( 'wp_footer', 'you_shall_not_pass', 1 );
 
 /**
 FINAL REPORT OF SCRIPTS
