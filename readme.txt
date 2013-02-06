@@ -38,6 +38,9 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 
 == Changelog ==
 
+= 1.5 =
+* Fixed a major bug : plugin active only in front end
+
 = 1.4 =
 * Fixed a minor bug : some javascripts enqueued with very high priority were ignored - filter scripts are now hooked on wp_print_scripts
 

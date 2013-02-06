@@ -3,7 +3,7 @@
 Plugin Name: WP deferred javaScript
 Plugin URI: http://wabeo.fr/blog/wordpress-javascripts-asynchrones/
 Description: This plugin defer the loading of all javascripts added by the way of wp_enqueue_scripts, using LABJS.
-Version:1.4
+Version:1.5
 Author: Willy Bahuaud, Daniel Roch
 Author URI: http://wabeo.fr
 */
@@ -23,15 +23,17 @@ PUSH SCRIPTS INTO OUR GLOBAL & EMPTYING $WP_SCRIPTS
 * @uses FILTER all_our_scripts_datas
 */
 function you_shall_not_pass() {
-	global $all_our_scripts, $wp_scripts;
-	foreach( $wp_scripts->queue as $s ) {
-		$all_our_scripts[ $wp_scripts->registered[ $s ]->handle ] = array(
-			'src'   => $wp_scripts->registered[ $s ]->src, 
-			'deps'  => $wp_scripts->registered[ $s ]->deps
-			);
-		apply_filters( 'all_our_scripts_datas', $all_our_scripts );
+	if( ! is_admin() ) {
+		global $all_our_scripts, $wp_scripts;
+		foreach( $wp_scripts->queue as $s ) {
+			$all_our_scripts[ $wp_scripts->registered[ $s ]->handle ] = array(
+				'src'   => $wp_scripts->registered[ $s ]->src, 
+				'deps'  => $wp_scripts->registered[ $s ]->deps
+				);
+			apply_filters( 'all_our_scripts_datas', $all_our_scripts );
+		}
+		$wp_scripts->queue = array();
 	}
-	$wp_scripts->queue = array();
 }
 add_action( 'wp_print_scripts', 'you_shall_not_pass', 9 );
 
