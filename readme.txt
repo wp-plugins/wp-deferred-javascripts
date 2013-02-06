@@ -38,6 +38,9 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixed a minor bug : plugin active was on login and register pages
+
 = 1.5 =
 * Fixed a major bug : plugin active only in front end
 
