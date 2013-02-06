@@ -38,6 +38,9 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 
 == Changelog ==
 
+= 1.5.2 =
+* Fixed a minor bug : bad priority while emptying $wp_scripts
+
 = 1.5.1 =
 * Fixed a minor bug : plugin active was on login and register pages
 
