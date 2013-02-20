@@ -3,7 +3,7 @@ Contributors: willybahuaud, Confridin
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 3.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 
 Defer the loading of all javascripts added with wp_enqueue_scripts, using LABJS (an asynchronous javascript library).
