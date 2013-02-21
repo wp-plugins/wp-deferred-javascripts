@@ -3,7 +3,7 @@
 Plugin Name: WP deferred javaScript
 Plugin URI: http://wabeo.fr/blog/wordpress-javascripts-asynchrones/
 Description: This plugin defer the loading of all javascripts added by the way of wp_enqueue_scripts, using LABJS.
-Version:1.5.3
+Version:1.5.4
 Author: Willy Bahuaud, Daniel Roch
 Author URI: http://wabeo.fr
 */
@@ -74,6 +74,8 @@ function cross_the_steams() {
 								'deps'  => $wp_scripts->registered[ $d ]->deps, 
 								'extra' => $wp_scripts->registered[ $d ]->extra);
 							$undead[ $wp_scripts->registered[ $d ]->handle ] = $all_our_scripts[ $wp_scripts->registered[ $d ]->handle ];
+							//Dont forget to add one script to counter
+							$i++;
 						}else{
 							unset( $all_our_scripts[ $k ] );
 							$i--;

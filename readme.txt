@@ -3,7 +3,7 @@ Contributors: willybahuaud, Confridin
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 
 Defer the loading of all javascripts added with wp_enqueue_scripts, using LABJS (an asynchronous javascript library).
@@ -37,6 +37,9 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 4. Average load time of **1.54** seconds **with WP Deferred Javascripts activated** and scripts queued in the footer
 
 == Changelog ==
+
+= 1.5.4 =
+* Prevent bug when scripts dependencies are not enqueud
 
 = 1.5.3 =
 * Prevent a minor bug for footer enqueue script
