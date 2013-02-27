@@ -3,7 +3,7 @@
 Plugin Name: WP deferred javaScript
 Plugin URI: http://wabeo.fr/blog/wordpress-javascripts-asynchrones/
 Description: This plugin defer the loading of all javascripts added by the way of wp_enqueue_scripts, using LABJS.
-Version:1.5.4
+Version:1.5.5
 Author: Willy Bahuaud, Daniel Roch
 Author URI: http://wabeo.fr
 */
@@ -28,7 +28,7 @@ function you_shall_not_pass() {
 		global $all_our_scripts, $wp_scripts;
 		foreach( $wp_scripts->queue as $s ) {
 			$all_our_scripts[ $wp_scripts->registered[ $s ]->handle ] = array(
-				'src'   => $wp_scripts->registered[ $s ]->src, 
+				'src'   =>  esc_url( $wp_scripts->registered[ $s ]->src ), 
 				'deps'  => $wp_scripts->registered[ $s ]->deps
 				);
 			apply_filters( 'all_our_scripts_datas', $all_our_scripts );
@@ -70,7 +70,7 @@ function cross_the_steams() {
 					if( !array_key_exists( $d, $undead ) ) { //can I load me ?
 						if( isset( $wp_scripts->registered[$d] ) ) { // yes you can
 							$all_our_scripts[ $wp_scripts->registered[ $d ]->handle ] = array(
-								'src'   => $wp_scripts->registered[ $d ]->src,
+								'src'   => esc_url( $wp_scripts->registered[ $d ]->src ),
 								'deps'  => $wp_scripts->registered[ $d ]->deps, 
 								'extra' => $wp_scripts->registered[ $d ]->extra);
 							$undead[ $wp_scripts->registered[ $d ]->handle ] = $all_our_scripts[ $wp_scripts->registered[ $d ]->handle ];
@@ -92,7 +92,7 @@ function cross_the_steams() {
 					$diff = array_diff(  $s['deps'], $waited_scripts );
 					if(  ! empty ( $diff ) ) {
 						$s['wait'] = true;
-						$waited_scripts =  array_merge( (array) $waited_scripts,  (array) $s['deps'] );
+						$waited_scripts =  array_merge( (array) $waited_scripts,  array_keys( $all_our_ordered_scripts ) );
 					}
 					$s['extra'] = $wp_scripts->registered[ $k ]->extra; //joining datas
 					$all_our_ordered_scripts[ $k ] = $s;
