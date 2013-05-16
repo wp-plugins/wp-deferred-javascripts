@@ -11,11 +11,11 @@ Author URI: http://wabeo.fr
 INITIALIZATION OF OUR GLOBAL VARIABLE
 * @global ARRAY $all_our_scripts 
 */
-function initialize_script_global() {
+function wpdjs_initialize_script_global() {
 	global $all_our_scripts;
 	$all_our_scripts = array();
 }
-add_action( 'init', 'initialize_script_global' );
+add_action( 'init', 'wpdjs_initialize_script_global' );
 /**
 PUSH SCRIPTS INTO OUR GLOBAL & EMPTYING $WP_SCRIPTS
 * @since 1.5.6 {new filter for exlude scripts from defering}
@@ -53,7 +53,7 @@ FINAL REPORT OF SCRIPTS
 * @var ARRAY $waited_scripts
 * @uses render_our_scripts_now() {{to render the scripts}}
 */
-function cross_the_steams() {
+function wpdjs_cross_the_steams() {
 	global $all_our_scripts, $wp_scripts;
 
 	$i                       = count( $all_our_scripts );
@@ -109,9 +109,9 @@ function cross_the_steams() {
 			}
 		}
 	}
-	render_our_scripts_now( $all_our_ordered_scripts ); //print scripts
+	wpdjs_render_our_scripts_now( $all_our_ordered_scripts ); //print scripts
 }
-add_action( 'wp_footer', 'cross_the_steams', 99 );
+add_action( 'wp_footer', 'wpdjs_cross_the_steams', 99 );
 
 /**
 FUNCTION USED FOR RENDERING SCRIPTS
@@ -121,7 +121,7 @@ FUNCTION USED FOR RENDERING SCRIPTS
 * @var VARCHAR $output
 * @uses wdjs_before_end_lab FILTER HOOK {to add some script to LABJS (like a function callback...)}
 */
-function render_our_scripts_now( $all_our_ordered_scripts ) {
+function wpdjs_render_our_scripts_now( $all_our_ordered_scripts ) {
 	if( ! empty( $all_our_ordered_scripts ) ) {
 		$output  = '<script src="' . plugin_dir_url( __FILE__ ) . 'j/lab.min.js"></script>' . "\r\n";
 		$output .= '<script>' . "\r\n";
