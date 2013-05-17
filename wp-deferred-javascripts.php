@@ -89,7 +89,7 @@ function wpdjs_cross_the_steams() {
 							break; //go back into darkness demonic creature ...
 						}
 					}else{
-						if( array_key_exists( $d, $all_our_ordered_scripts ) ) { // one more satisfied condition
+						if( array_key_exists( $d, $all_our_ordered_scripts ) || array_key_exists( $d, $script_normaly_enqueued ) ) { // one more satisfied condition
 							$alldepscounter++;
 						}
 					}
