@@ -25,9 +25,32 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 
 == Installation ==
 
-1. Upload the WP Deferred Javascripts plugin to your blog and Activate it.
+= Default =
 
+1. Upload the WP Deferred Javascripts plugin to your blog and Activate it.
 2. Enjoy ^^
+
+= Exclude Scripts =
+
+Release 1.5.6 provide a new filter hook named *do_not_defer* which take an array of script's handle as argument.
+Theses script will not be deferred.
+
+= Defer inline scripts execution =
+
+New release 1.5.6 provide another filter hook named *wdjs_before_end_lab* which take a string of javascript code as argument.
+Code will be call add the end of LabJS enqueue, calling one function or more.
+
+For exemple : 
+`
+<?php 
+function load_my_js_code_after_loading() {
+    return '.wait(function(){alert 'loaded';anInlineFunction();})';
+}
+add_filter( 'wdjs_before_end_lab', 'load_my_js_code_after_loading' );
+`
+Adding this will execute *anInlineFunction()* and print *'Loaded'* after all my scripts have been loaded :-)
+
+Using other plugins hook, you can wrap JS inline code into a function, and call this function with *load_my_js_code_after_loading*...
 
 == Screenshots ==
 
