@@ -2,7 +2,7 @@
 Contributors: willybahuaud, Confridin
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 1.5.6
 License: GPLv2 or later
 
