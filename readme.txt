@@ -3,7 +3,7 @@ Contributors: willybahuaud, Confridin
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.5.6
+Stable tag: 2.0.0
 License: GPLv2 or later
 
 Defer the loading of all javascripts added with wp_enqueue_scripts, using LABJS (an asynchronous javascript library).
@@ -14,7 +14,7 @@ This plugin defer the loading of all javascripts added by the way of wp_enqueue_
 
 It is compatible with all WordPress javascript functions (localize_script, js in header, in footer ...) and works with all well coded plugins.
 
-If a plugin or a theme is not properly enqueuing scripts, your site may not work. Check this page : [Function Reference/wp_enqueue_script on WordPress Codex](http://codex.wordpress.org/Function_Reference/wp_enqueue_script)
+If a plugin or a theme is not poperly enqueuing scripts, your site may not work. Check this page : [Function Reference/wp_enqueue_script on WordPress Codex](http://codex.wordpress.org/Function_Reference/wp_enqueue_script)
 
 LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project supported by [Getify Solutions](http://getify.com/).
 
@@ -25,32 +25,9 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 
 == Installation ==
 
-= Default =
-
 1. Upload the WP Deferred Javascripts plugin to your blog and Activate it.
+
 2. Enjoy ^^
-
-= Exclude Scripts =
-
-Release 1.5.6 provide a new filter hook named *do_not_defer* which take an array of script's handle as argument.
-Theses script will not be deferred.
-
-= Defer inline scripts execution =
-
-New release 1.5.6 provide another filter hook named *wdjs_before_end_lab* which take a string of javascript code as argument.
-Code will be call add the end of LabJS enqueue, calling one function or more.
-
-For exemple : 
-`
-<?php 
-function load_my_js_code_after_loading() {
-    return '.wait(function(){alert 'loaded';anInlineFunction();})';
-}
-add_filter( 'wdjs_before_end_lab', 'load_my_js_code_after_loading' );
-`
-Adding this will execute *anInlineFunction()* and print *'Loaded'* after all my scripts have been loaded :-)
-
-Using other plugins hook, you can wrap JS inline code into a function, and call this function with *load_my_js_code_after_loading*...
 
 == Screenshots ==
 
@@ -60,11 +37,6 @@ Using other plugins hook, you can wrap JS inline code into a function, and call 
 4. Average load time of **1.54** seconds **with WP Deferred Javascripts activated** and scripts queued in the footer
 
 == Changelog ==
-
-= 1.5.6 =
-* Add a release argument to scripts's URL, to solve problems with hard caching methods
-* Add a Filter Hook namned "do_not_defer", to exlude scripts from defer process
-* Add a Filter Hook namned "wdjs_before_end_lab", to add callback functions to labJS, improving compatibility with some plugins...
 
 = 1.5.5 =
 * Solve a problem when uri script contain "&amp;"
