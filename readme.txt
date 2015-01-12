@@ -1,5 +1,5 @@
 === WP Deferred Javascripts ===
-Contributors: willybahuaud, Confridin
+Contributors: willybahuaud, Confridin, greglone
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
 Tested up to: 4.1
@@ -29,6 +29,96 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 
 2. Enjoy ^^
 
+== Frequently Asked Questions ==
+
+WP Deferred JavaScript includes some hooks. If you never used one of them, [check this page](http://codex.wordpress.org/Plugin_API). It's better to use those filters in a plugin or a mu-plugin.
+
+= Exclude Scripts =
+
+`do_not_defer` is a filter that took as a parameter an array containing scripts that should be handle normally.
+
+Here is an example :
+
+	// Normal script enqueue
+	add_action( 'wp_enqueue_scripts', 'register_canvas_script' );
+	function register_canvas_script() {
+		wp_register_script( 'my-canvas-script', 'http://exemple.com/myscript.js' );
+		wp_enqueue_script( 'my-canvas-script' );
+	}
+	
+	// Don't defer this script
+	add_filter( 'do_not_defer', 'exclude_canvas_script' );
+	function exclude_canvas_script( $do_not_defer ) {
+		$do_not_defer[] = 'my-canvas-script';
+		return $do_not_defer;
+	}
+
+= Change LABJS URL =
+
+`wdjs_labjs_src` is a filter that allow you to change LabJS URL.
+ ($lab_src, $lab_ver)
+
+	// for example, I need a specific version of LabJS
+	add_filter( 'wdjs_labjs_src', 'my_labjs_src', 10, 2 );
+	function my_labjs_src( $src, $ver ) {
+		if ( '2.0' != $ver ) {
+			// Hotlinking raw github is a bad practice, I did id just for the lulz
+			return 'https://raw.githubusercontent.com/getify/LABjs/edb9fed40dc224bc03c338be938cb586ef397fa6/LAB.min.js';
+		}
+		return $src;
+	}
+
+= HTML5 compatibility =
+
+If you use HTM5, `wdjs_use_html5` is a filter that remove the `type="text/javascript"` attribute. You can use it this way:
+
+	add_filter( 'wdjs_use_html5', '__return_true' );
+
+= Change a script URL =
+
+`wdjs_deferred_script_src` can be used to change the way one of the script is loaded. For example:
+
+	// Here, I need to add information about the charset
+	add_filter( 'wdjs_deferred_script_src', '', 10, 3 );
+	function change_my_script_src( $src_string, $handle, $src ) {
+		// $src_string -> .script("http://exemple.com/myscript.js?v=2.0")
+		// $handle -> my-script
+		// $src -> http://exemple.com/myscript.js?v=2.0
+		$out = array( 'src' => $src, 'charset' => 'iso-8859-1' );
+		return '.wait(' . json_encode( $out ) . ')';
+	}
+
+= How to execute a code right after script loading =
+
+You may need to execute a script right after its loading. You can use `wdjs_deferred_script_wait` filter to do it.
+
+	add_action( 'wdjs_deferred_script_wait', 'after_my_script', 10, 2 );
+	function after_my_script( $wait, $handle ) {
+		if ( 'my-script' == $handle ) {
+			$wait = 'function(){new MyScriptObject();}';
+		}
+		return $wait;
+	}
+
+= Execute a function when all scripts are loaded =
+
+You may have to use inline javscript in your footer. If that's the case, you will have to use that last hook to make it compatible with WP Deferred Javascript.
+
+You will have to wrap this inline JS into a new function.  Then, you will have to use wdjs_before_end_lab to execute it.
+
+	// This is a fake function that we are wrapping in a new function
+	add_filter( 'before_shitty_plugin_print_js', 'wrap_this_code' );
+	function wrap_this_code( $code ) {
+		return 'function PluginShittyCode(){' . $code . '}';
+	}
+
+	add_filter( 'wdjs_before_end_lab', 'call_shitty_code' );
+	function call_shitty_code( $end ) {
+		$end .= '.PluginShittyCode()';
+		return $end;
+	}
+
+
 == Screenshots ==
 
 1. Average load time of **1.91** seconds **without WP Deferred Javascripts activated** and scripts loaded in the header
@@ -37,6 +127,15 @@ You can find [more information about WP defered Javascripts](http://www.seomix.f
 4. Average load time of **1.54** seconds **with WP Deferred Javascripts activated** and scripts queued in the footer
 
 == Changelog ==
+
+= 2.0.0 =
+* Overall code rewrite, by [Grégory Viguier](http://screenfeed.fr)
+* New hooks
+* LabJS is loaded now loaded asynchronously
+* Conditional script are now supported
+* Bug fix: 404 error on scripts without source
+* Script dependency that should not be deferred are now excluded automatically
+* WP Deferred JavaScript is compatible with [SF Cache Busting](http://www.screenfeed.fr/plugin-wp/sf-cache-busting/)
 
 = 1.5.5 =
 * Solve a problem when uri script contain "&amp;"
