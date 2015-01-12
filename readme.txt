@@ -35,7 +35,7 @@ WP Deferred JavaScript includes some hooks. If you never used one of them, [chec
 
 = Exclude Scripts =
 
-`do_not_defer` is a filter that took as a parameter an array containing scripts that should be handle normally.
+*do_not_defer* is a filter that took as a parameter an array containing scripts that should be handle normally.
 
 Here is an example :
 
@@ -55,7 +55,7 @@ Here is an example :
 
 = Change LABJS URL =
 
-`wdjs_labjs_src` is a filter that allow you to change LabJS URL.
+*wdjs_labjs_src* is a filter that allow you to change LabJS URL.
  ($lab_src, $lab_ver)
 
 	// for example, I need a specific version of LabJS
@@ -76,7 +76,7 @@ If you use HTM5, `wdjs_use_html5` is a filter that remove the `type="text/javasc
 
 = Change a script URL =
 
-`wdjs_deferred_script_src` can be used to change the way one of the script is loaded. For example:
+*wdjs_deferred_script_src* can be used to change the way one of the script is loaded. For example:
 
 	// Here, I need to add information about the charset
 	add_filter( 'wdjs_deferred_script_src', '', 10, 3 );
@@ -90,7 +90,7 @@ If you use HTM5, `wdjs_use_html5` is a filter that remove the `type="text/javasc
 
 = How to execute a code right after script loading =
 
-You may need to execute a script right after its loading. You can use `wdjs_deferred_script_wait` filter to do it.
+You may need to execute a script right after its loading. You can use *wdjs_deferred_script_wait* filter to do it.
 
 	add_action( 'wdjs_deferred_script_wait', 'after_my_script', 10, 2 );
 	function after_my_script( $wait, $handle ) {
