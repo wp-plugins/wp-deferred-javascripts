@@ -3,7 +3,7 @@ Contributors: willybahuaud, Confridin, greglone
 Tags: javascript, optimization, performance, deferring, labjs, asynchronous, speed
 Requires at least: 3.0
 Tested up to: 4.2
-Stable tag: 2.0.0
+Stable tag: trunk
 License: GPLv2 or later
 
 Defer the loading of all javascripts added with wp_enqueue_scripts, using LABJS (an asynchronous javascript library).
@@ -18,7 +18,7 @@ If a plugin or a theme is not poperly enqueuing scripts, your site may not work.
 
 LABjs (Loading And Blocking JavaScript) is an open-source (MIT license) project supported by [Getify Solutions](http://getify.com/).
 
-We performed a range of tests to determine the potential benefit of loading time. On [wabeo](http://wabeo.fr) we executed [webwait](http://webwait.com/) (150 calls by test). Result is this plugin could **improve your loading time by 25%** !! 
+We performed a range of tests to determine the potential benefit of loading time. On [wabeo](http://wabeo.fr) we executed [webwait](http://webwait.com/) (150 calls by test). Result is this plugin could **improve your loading time by 25%** !!
 More information in the [Screenshots section](http://wordpress.org/extend/plugins/wp-deferred-javascripts/screenshots/).
 
 You can find [more information about WP defered Javascripts](http://www.seomix.fr/wp-deferred-javascript/) and [technical information about asynchronous scripts](http://wabeo.fr/blog/wordpress-javascripts-asynchrones/) on authors blogs.
@@ -45,7 +45,7 @@ Here is an example :
 		wp_register_script( 'my-canvas-script', 'http://exemple.com/myscript.js' );
 		wp_enqueue_script( 'my-canvas-script' );
 	}
-	
+
 	// Don't defer this script
 	add_filter( 'do_not_defer', 'exclude_canvas_script' );
 	function exclude_canvas_script( $do_not_defer ) {
@@ -127,6 +127,11 @@ You will have to wrap this inline JS into a new function.  Then, you will have t
 4. Average load time of **1.54** seconds **with WP Deferred Javascripts activated** and scripts queued in the footer
 
 == Changelog ==
+
+= 2.0.1 =
+* Small code improvement.
+* Prefix functions with `wdjs` instead of `sfdjs`.
+* Bugfix for unregistered scripts that use the filter `script_loader_src`.
 
 = 2.0.0 =
 * Overall code rewrite, by [Grégory Viguier](http://screenfeed.fr)

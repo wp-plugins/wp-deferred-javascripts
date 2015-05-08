@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // !Store/get some data.
 
-if ( ! function_exists('sf_cache_data') ):
+if ( ! function_exists( 'sf_cache_data' ) ) :
 function sf_cache_data( $key, $data = 'trolilol' ) {
 	static $datas = array();
 	if ( $data !== 'trolilol' ) {
@@ -22,7 +22,7 @@ endif;
 
 // !Recursive function to find all dependencies, given an array of JS handles.
 
-function sfdjs_get_all_deps( $scripts ) {
+function wdjs_get_all_deps( $scripts ) {
 	global $wp_scripts;
 	$out = array();
 
@@ -31,7 +31,7 @@ function sfdjs_get_all_deps( $scripts ) {
 			if ( ! empty( $wp_scripts->registered[ $handle ]->deps ) ) {
 				$deps = array_filter( (array) $wp_scripts->registered[ $handle ]->deps );
 				if ( ! empty( $deps ) ) {
-					$out = array_merge( $out, sfdjs_get_all_deps( $deps ) );
+					$out = array_merge( $out, wdjs_get_all_deps( $deps ) );
 				}
 			}
 
@@ -47,7 +47,7 @@ function sfdjs_get_all_deps( $scripts ) {
 
 // !Recursive function to tell if a JS handle is a dependency.
 
-function sfdjs_script_is_dependency( $my_script, $scripts ) {
+function wdjs_script_is_dependency( $my_script, $scripts ) {
 	global $wp_scripts;
 
 	if ( is_array( $scripts ) && ! empty( $scripts ) ) {
@@ -55,7 +55,7 @@ function sfdjs_script_is_dependency( $my_script, $scripts ) {
 			if ( ! empty( $wp_scripts->registered[ $handle ]->deps ) ) {
 				$deps = array_filter( (array) $wp_scripts->registered[ $handle ]->deps );
 
-				if ( ! empty( $deps ) && ( in_array( $my_script, $deps ) || sfdjs_script_is_dependency( $my_script, $deps ) ) ) {
+				if ( ! empty( $deps ) && ( in_array( $my_script, $deps ) || wdjs_script_is_dependency( $my_script, $deps ) ) ) {
 					return true;
 				}
 			}
@@ -73,18 +73,18 @@ function sfdjs_script_is_dependency( $my_script, $scripts ) {
 // !Store an array containing all scripts that should not be deferred, including their dependencies.
 // !Store an array containing the data for the deferred scripts (those data are normally printed BEFORE the filter <code>'script_loader_src'</code>, this is why I grab them here).
 
-add_filter( 'print_scripts_array', 'sfdjs_store_do_not_defer_deps' );
+add_filter( 'print_scripts_array', 'wdjs_store_do_not_defer_deps' );
 
-function sfdjs_store_do_not_defer_deps( $to_do ) {
+function wdjs_store_do_not_defer_deps( $to_do ) {
 	global $wp_scripts;
 	$do_not_defer = (array) apply_filters( 'do_not_defer', array() );
 	$do_not_defer = array_filter( (array) $do_not_defer );
 
 	if ( ! empty( $do_not_defer ) ) {
-		$do_not_defer = sfdjs_get_all_deps( $do_not_defer );
+		$do_not_defer = wdjs_get_all_deps( $do_not_defer );
 	}
 
-	$datas    = sf_cache_data( 'sfdjs_deferred_datas' );
+	$datas    = sf_cache_data( 'wdjs_deferred_datas' );
 	$datas    = is_array( $datas ) ? $datas : array();
 	$deferred = $wp_scripts->queue;
 	if ( ! empty( $do_not_defer ) ) {
@@ -99,8 +99,8 @@ function sfdjs_store_do_not_defer_deps( $to_do ) {
 		}
 	}
 
-	sf_cache_data( 'sfdjs_do_not_defer', $do_not_defer );
-	sf_cache_data( 'sfdjs_deferred_datas', $datas );
+	sf_cache_data( 'wdjs_do_not_defer', $do_not_defer );
+	sf_cache_data( 'wdjs_deferred_datas', $datas );
 
 	return $to_do;
 }
@@ -108,16 +108,17 @@ function sfdjs_store_do_not_defer_deps( $to_do ) {
 
 // !Store an array containing all scripts that should be deferred.
 
-add_filter( 'script_loader_src', 'sfdjs_store_deferred_scripts', PHP_INT_MAX, 2 );
+add_filter( 'script_loader_src', 'wdjs_store_deferred_scripts', PHP_INT_MAX, 2 );
 
-function sfdjs_store_deferred_scripts( $src, $handle ) {
-	$do_not_defer = sf_cache_data( 'sfdjs_do_not_defer' );
+function wdjs_store_deferred_scripts( $src, $handle ) {
+	global $wp_scripts;
+	$do_not_defer = sf_cache_data( 'wdjs_do_not_defer' );
 
-	if ( ! isset( $do_not_defer[ $handle ] ) ) {
-		$deferred = sf_cache_data( 'sfdjs_deferred' );
+	if ( ! isset( $do_not_defer[ $handle ] ) && isset( $wp_scripts->registered[ $handle ] ) ) {
+		$deferred = sf_cache_data( 'wdjs_deferred' );
 		$deferred = is_array( $deferred ) ? $deferred : array();
 		$deferred[ $handle ] = $handle;
-		sf_cache_data( 'sfdjs_deferred', $deferred );
+		sf_cache_data( 'wdjs_deferred', $deferred );
 		return false;
 	}
 
@@ -129,16 +130,16 @@ function sfdjs_store_deferred_scripts( $src, $handle ) {
 /* !PRINT OUR SCRIPT. ============================================================== */
 /*-----------------------------------------------------------------------------------*/
 
-add_action( 'wp_footer', 'sfdjs_render_scripts', PHP_INT_MAX );
+add_action( 'wp_footer', 'wdjs_render_scripts', PHP_INT_MAX );
 
-function sfdjs_render_scripts() {
+function wdjs_render_scripts() {
 	global $wp_scripts, $wp_filter;
-	$deferred = sf_cache_data( 'sfdjs_deferred' );
-	$datas    = sf_cache_data( 'sfdjs_deferred_datas' );
+	$deferred = sf_cache_data( 'wdjs_deferred' );
+	$datas    = sf_cache_data( 'wdjs_deferred_datas' );
 
 	if ( ! empty( $deferred ) ) {
 		$lab_ver   = '2.0.3';
-		$lab_src   = SFDJS_PLUGIN_URL . 'assets/js/lab.min.js';
+		$lab_src   = WDJS_PLUGIN_URL . 'assets/js/lab.min.js';
 		// You also use my plugin SF Cache Busting, right? RIGHT?! ;)
 		$lab_src   = function_exists( 'sfbc_build_src_for_cache_busting' ) ? sfbc_build_src_for_cache_busting( $lab_src, $lab_ver ) : $lab_src . '?ver=' . $lab_ver;
 		$lab_src   = apply_filters( 'wdjs_labjs_src', $lab_src, $lab_ver );
@@ -225,7 +226,7 @@ function sfdjs_render_scripts() {
 			$output .= ')';
 
 			$wait = apply_filters( 'wdjs_deferred_script_wait', '', $handle );
-			if ( $wait || sfdjs_script_is_dependency( $handle, $deferred ) ) {
+			if ( $wait || wdjs_script_is_dependency( $handle, $deferred ) ) {
 				$output .= '.wait(' . $wait . ')';
 			}
 		}
