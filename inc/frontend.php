@@ -92,10 +92,16 @@ function wdjs_store_do_not_defer_deps( $to_do ) {
 	}
 	if ( ! empty( $deferred ) ) {
 		foreach ( $deferred as $handle ) {
-			if ( ! isset( $datas[ $handle ] ) && ! empty( $wp_scripts->registered[ $handle ]->extra['data'] ) ) {
-				$datas[ $handle ] = $wp_scripts->registered[ $handle ]->extra['data'];
-				unset( $wp_scripts->registered[ $handle ]->extra['data'] );
+			if ( empty( $wp_scripts->registered[ $handle ]->extra['data'] ) ) {
+				continue;
 			}
+			if ( ! isset( $datas[ $handle ] ) ) {
+				$datas[ $handle ] = $wp_scripts->registered[ $handle ]->extra['data'] . "\n";
+			}
+			elseif ( strpos( $datas[ $handle ], $wp_scripts->registered[ $handle ]->extra['data'] ) === false ) {
+				$datas[ $handle ] .= $wp_scripts->registered[ $handle ]->extra['data'] . "\n";
+			}
+			unset( $wp_scripts->registered[ $handle ]->extra['data'] );
 		}
 	}
 
@@ -193,9 +199,6 @@ function wdjs_render_scripts() {
 		}
 		elseif ( $last_cond ) {
 			$output .= "$end_tag<![endif]-->\n$start_tag";
-		}
-		else {
-			$output .= "\n";
 		}
 
 		$output .= '(function(g,b,d){var c=b.head||b.getElementsByTagName("head"),D="readyState",E="onreadystatechange",F="DOMContentLoaded",G="addEventListener",H=setTimeout;function f(){';

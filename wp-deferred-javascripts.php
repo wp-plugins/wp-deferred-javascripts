@@ -3,7 +3,7 @@
  * Plugin Name: WP deferred javaScript
  * Plugin URI: http://www.screenfeed.fr
  * Description: This plugin defer the loading of all javascripts added by the way of <code>wp_enqueue_script()</code>, using LABJS.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Willy Bahuaud, Daniel Roch, Grégory Viguier
  * Author URI: http://wabeo.fr/wp-deferred-js-authors.html
  * License: GPLv3
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-define( 'WDJS_VERSION',    '2.0.1' );
+define( 'WDJS_VERSION',    '2.0.2' );
 define( 'WDJS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 
